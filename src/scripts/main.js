@@ -42,17 +42,38 @@ function deleteCol() {
 }
 
 addRow.addEventListener('click', (e) => {
-  meinTabl.append(creatRowTab());
+  const rowArr = Array.from(meinTabl.rows);
+
+  if (rowArr.length > 9) {
+  } else {
+    meinTabl.append(creatRowTab());
+  }
 });
 
 addCol.addEventListener('click', (e) => {
-  creatColTab();
+  const arrRows = Array.from(meinTabl.rows);
+  const cellsCount = arrRows[0].cells.length;
+
+  if (cellsCount > 9) {
+  } else {
+    creatColTab();
+  }
 });
 
 remRow.addEventListener('click', (e) => {
-  deleteRow();
+  const arrRows = Array.from(meinTabl.rows);
+
+  if (arrRows.length < 3) {
+  } else {
+    deleteRow();
+  }
 });
 
 remCol.addEventListener('click', (e) => {
-  deleteCol();
+  const cellsCount = Array.from(meinTabl.rows)[0].cells.length;
+
+  if (cellsCount < 3) {
+  } else {
+    deleteCol();
+  }
 });
