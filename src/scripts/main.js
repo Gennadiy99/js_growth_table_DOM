@@ -14,7 +14,7 @@ function creatRowTab() {
     newRow.append(document.createElement('td'));
   }
 
-  return newRow;
+  meinTabl.append(newRow);
 }
 
 function creatColTab() {
@@ -23,57 +23,75 @@ function creatColTab() {
   arrRows.forEach((row) => {
     row.append(document.createElement('td'));
   });
-
-  return arrRows;
 }
 
 function deleteRow() {
   const arrRows = Array.from(meinTabl.rows);
 
-  arrRows[arrRows.length - 1].remove();
+  arrRows.at(-1).remove();
 }
 
 function deleteCol() {
   const arrRows = Array.from(meinTabl.rows);
 
   arrRows.forEach((row) => {
-    row.cells[row.cells.length - 1].remove();
+    row.deleteCell(-1);
   });
 }
 
 addRow.addEventListener('click', (e) => {
-  const rowArr = Array.from(meinTabl.rows);
+  creatRowTab();
 
-  if (rowArr.length > 9) {
-  } else {
-    meinTabl.append(creatRowTab());
+  const rowCount = Array.from(meinTabl.rows).length;
+
+  if (rowCount > 9) {
+    addRow.disabled = true;
+  }
+
+  if (rowCount > 2) {
+    remRow.disabled = false;
   }
 });
 
 addCol.addEventListener('click', (e) => {
+  creatColTab();
+
   const arrRows = Array.from(meinTabl.rows);
   const cellsCount = arrRows[0].cells.length;
 
   if (cellsCount > 9) {
-  } else {
-    creatColTab();
+    addCol.disabled = true;
+  }
+
+  if (cellsCount > 2) {
+    remCol.disabled = false;
   }
 });
 
 remRow.addEventListener('click', (e) => {
+  deleteRow();
+
   const arrRows = Array.from(meinTabl.rows);
 
+  if (arrRows.length < 10) {
+    addRow.disabled = false;
+  }
+
   if (arrRows.length < 3) {
-  } else {
-    deleteRow();
+    remRow.disabled = true;
   }
 });
 
 remCol.addEventListener('click', (e) => {
+  deleteCol();
+
   const cellsCount = Array.from(meinTabl.rows)[0].cells.length;
 
   if (cellsCount < 3) {
-  } else {
-    deleteCol();
+    remCol.disabled = true;
+  }
+
+  if (cellsCount < 10) {
+    addCol.disabled = false;
   }
 });
