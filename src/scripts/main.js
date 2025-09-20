@@ -6,6 +6,36 @@ const addCol = document.querySelector('.append-column');
 const remRow = document.querySelector('.remove-row');
 const remCol = document.querySelector('.remove-column');
 
+function updateButtonStates() {
+  const arrRows = Array.from(meinTabl.rows);
+  const rowCount = arrRows.length;
+  const cellsCount = arrRows[0].cells.length;
+
+  if (rowCount > 9) {
+    addRow.disabled = true;
+  } else {
+    addRow.disabled = false;
+  }
+
+  if (rowCount < 3) {
+    remRow.disabled = true;
+  } else {
+    remRow.disabled = false;
+  }
+
+  if (cellsCount > 9) {
+    addCol.disabled = true;
+  } else {
+    addCol.disabled = false;
+  }
+
+  if (cellsCount < 3) {
+    remCol.disabled = true;
+  } else {
+    remCol.disabled = false;
+  }
+}
+
 function creatRowTab() {
   const newRow = document.createElement('tr');
   const cauntCol = meinTabl.rows[0].cells.length;
@@ -41,57 +71,20 @@ function deleteCol() {
 
 addRow.addEventListener('click', (e) => {
   creatRowTab();
-
-  const rowCount = Array.from(meinTabl.rows).length;
-
-  if (rowCount > 9) {
-    addRow.disabled = true;
-  }
-
-  if (rowCount > 2) {
-    remRow.disabled = false;
-  }
+  updateButtonStates();
 });
 
 addCol.addEventListener('click', (e) => {
   creatColTab();
-
-  const arrRows = Array.from(meinTabl.rows);
-  const cellsCount = arrRows[0].cells.length;
-
-  if (cellsCount > 9) {
-    addCol.disabled = true;
-  }
-
-  if (cellsCount > 2) {
-    remCol.disabled = false;
-  }
+  updateButtonStates();
 });
 
 remRow.addEventListener('click', (e) => {
   deleteRow();
-
-  const arrRows = Array.from(meinTabl.rows);
-
-  if (arrRows.length < 10) {
-    addRow.disabled = false;
-  }
-
-  if (arrRows.length < 3) {
-    remRow.disabled = true;
-  }
+  updateButtonStates();
 });
 
 remCol.addEventListener('click', (e) => {
   deleteCol();
-
-  const cellsCount = Array.from(meinTabl.rows)[0].cells.length;
-
-  if (cellsCount < 3) {
-    remCol.disabled = true;
-  }
-
-  if (cellsCount < 10) {
-    addCol.disabled = false;
-  }
+  updateButtonStates();
 });
